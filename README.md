@@ -62,4 +62,4 @@ Verification:
 3. Verify that the password matches the hash
 
 ## License
-This is free and unencumbered software released into the public domain. You may read the full license [here](https://github.com/lightbulblighter/blob/master/LICENSE) for more information.
+This is free and unencumbered software released into the public domain. You may read the full license [here](https://github.com/lightbulblighter/passwordrock/blob/master/LICENSE) for more information.
