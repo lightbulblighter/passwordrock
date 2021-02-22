@@ -31,7 +31,7 @@ class PasswordRock
      *
      * @return array
      */
-    public static function lock($password, $salt_key)
+    public static function lock($password, $salt_key = false)
     {
         $salt = self::generateSalt();
         $hash = \password_hash(
