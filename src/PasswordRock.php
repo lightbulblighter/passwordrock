@@ -36,7 +36,7 @@ class PasswordRock
         $salt = self::generateSalt();
         $hash = \password_hash(
             Base64::encode(
-                \hash('sha384', ($password . $salt), true)
+                \hash('sha512', ($password . $salt), true)
             ),
             PASSWORD_ARGON2ID
         );
@@ -81,7 +81,7 @@ class PasswordRock
         }
         return \password_verify(
             Base64::encode(
-                \hash('sha384', ($password . $locked['salt']), true)
+                \hash('sha512', ($password . $locked['salt']), true)
             ),
             $hash
         );
