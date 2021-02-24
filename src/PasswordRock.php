@@ -5,7 +5,7 @@ namespace lightbulblighter\PasswordRock;
 use \Defuse\Crypto\Crypto;
 use \Defuse\Crypto\KeyProtectedByPassword;
 use \Defuse\Crypto\Core;
-use \ParagonIE\ConstantTime\Base64;
+use \ParagonIE\ConstantTime\Encoding;
 
 class PasswordRock
 {
@@ -18,7 +18,7 @@ class PasswordRock
      */
     private static function generateSalt()
     {
-        return Core::secureRandom(self::SALT_LENGTH);
+        return Encoding::hexEncode(Core::secureRandom(self::SALT_LENGTH));
     }
 
     /**
@@ -35,7 +35,7 @@ class PasswordRock
     {
         $salt = self::generateSalt();
         $hash = \password_hash(
-            Base64::encode(
+            Encoding::base64Encode(
                 \hash('sha512', ($password . $salt), true)
             ),
             PASSWORD_ARGON2ID
@@ -47,7 +47,6 @@ class PasswordRock
             $password .= $salt;
         }
         $key = KeyProtectedByPassword::createRandomPasswordProtectedKey($password);
-
         return [
             'ciphertext' => Crypto::encrypt($hash, $key->unlockKey($password)),
             'salt' => $salt,
@@ -80,7 +79,7 @@ class PasswordRock
             throw new \Exception('Unknown hashing error.');
         }
         return \password_verify(
-            Base64::encode(
+            Encoding::base64Decode(
                 \hash('sha512', ($password . $locked['salt']), true)
             ),
             $hash
